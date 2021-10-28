@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <title>魔方</title>
+    <script src="utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+
+    <style>
+        #debug {
+            height: 400px;
+            width: 100%;
+            background-color: aqua;
+            position: absolute;
+            bottom: 0;
+            border: 0;
+            left: 0;
+            padding: 0;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p id="status"></p>
+    <p>{{cameraWidth}}</p>
+    <p>{{cameraHeight}}</p>
+    <select v-model="camera" onchange="app.cam()" >
+        <option v-for="index in cameras" :key="index.deviceId"  :value ="index.deviceId" >
+            {{ index.label }}
+        </option>
+    </select>
+    <!--  移动端浏览器允许自动播放，除非静音muted -->
+    <video id="video" autoplay muted playsinline></video>
+    <canvas id="canvasOutput"></canvas>
+    <canvas id="roi"></canvas>
+    <canvas id="result"></canvas>
+
+
+
+
+    <textarea id="debug" :value="message"></textarea>
+</div>
+
+<script src="main.js"></script>
+<script async src="opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+</html>
