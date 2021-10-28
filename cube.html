@@ -31,15 +31,13 @@
         </option>
     </select>
     <!--  移动端浏览器允许自动播放，除非静音muted -->
-    <video id="video" autoplay muted playsinline></video>
-    <canvas id="canvasOutput"></canvas>
-    <canvas id="roi"></canvas>
-    <canvas id="result"></canvas>
+    <video id="video" autoplay muted playsinline style="display: none"></video>
+    <canvas id="roi" width="100%"></canvas>
 
 
 
 
-    <textarea id="debug" :value="message"></textarea>
+    <textarea id="debug" :value="message" style="z-index: -10;display: none"></textarea>
 </div>
 
 <script src="main.js"></script>
