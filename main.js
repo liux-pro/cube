@@ -88,31 +88,46 @@ function cvMain(video) {
     video.width = app.cameraWidth
     video.height = app.cameraHeight
     let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
-    let dst = new cv.Mat(video.height, video.width, cv.CV_8UC1);
     let cap = new cv.VideoCapture(video);
 
     //get a  square
     let a = Math.min(app.cameraWidth, app.cameraHeight)
     this.a = a
+    let dst = new cv.Mat(a, a, cv.CV_8UC3);
 
 
     let square = new cv.Rect(0, 0, a, a);
 
-    let p1  = new cv.Point(a*0.125, a*0.125);
-    let p2  = new cv.Point(a*0.375, a*0.125);
-    let p3  = new cv.Point(a*0.625, a*0.125);
-    let p4  = new cv.Point(a*0.875, a*0.125);
-    let p5  = new cv.Point(a*0.875, a*0.375);
-    let p6  = new cv.Point(a*0.875, a*0.625);
-    let p7  = new cv.Point(a*0.875, a*0.875);
-    let p8  = new cv.Point(a*0.625, a*0.875);
-    let p9  = new cv.Point(a*0.375, a*0.875);
-    let p10  = new cv.Point(a*0.125, a*0.875);
-    let p11  = new cv.Point(a*0.125, a*0.625);
-    let p12  = new cv.Point(a*0.125, a*0.375);
+    let p = [
+        new cv.Point(a * 0.125, a * 0.125),
+        new cv.Point(a * 0.375, a * 0.125),
+        new cv.Point(a * 0.625, a * 0.125),
+        new cv.Point(a * 0.875, a * 0.125),
+        new cv.Point(a * 0.875, a * 0.375),
+        new cv.Point(a * 0.875, a * 0.625),
+        new cv.Point(a * 0.875, a * 0.875),
+        new cv.Point(a * 0.625, a * 0.875),
+        new cv.Point(a * 0.375, a * 0.875),
+        new cv.Point(a * 0.125, a * 0.875),
+        new cv.Point(a * 0.125, a * 0.625),
+        new cv.Point(a * 0.125, a * 0.375),
+    ]
 
 
+    let b = [
+        new cv.Point(a * 0.25, a * 0.25),
+        new cv.Point(a * 0.25, a * 0.50),
+        new cv.Point(a * 0.25, a * 0.75),
+        new cv.Point(a * 0.50, a * 0.25),
+        new cv.Point(a * 0.50, a * 0.50),
+        new cv.Point(a * 0.50, a * 0.75),
+        new cv.Point(a * 0.75, a * 0.25),
+        new cv.Point(a * 0.75, a * 0.50),
+        new cv.Point(a * 0.75, a * 0.75),
+    ]
 
+
+    let d = document.getElementById("debug");
 
 
     let gray = [0, 255, 0, 255]
@@ -121,18 +136,26 @@ function cvMain(video) {
         try {
             cap.read(src);
             let roi = src.roi(square);
-            cv.line(roi, p1, p4, [0, 255, 0, 100], 5)
-            cv.line(roi, p4, p7, [0, 255, 0, 100], 5)
-            cv.line(roi, p7, p10, [0, 255, 0, 100], 5)
-            cv.line(roi, p10, p1, [0, 255, 0, 100], 5)
-            cv.line(roi, p12, p5, [0, 255, 0, 100], 5)
-            cv.line(roi, p11, p6, [0, 255, 0, 100], 5)
-            cv.line(roi, p2, p9, [0, 255, 0, 100], 5)
-            cv.line(roi, p3, p8, [0, 255, 0, 100], 5)
+            cv.line(roi, p[0], p[3], [0, 255, 0, 100], 5)
+            cv.line(roi, p[3], p[6], [0, 255, 0, 100], 5)
+            cv.line(roi, p[6], p[9], [0, 255, 0, 100], 5)
+            cv.line(roi, p[9], p[0], [0, 255, 0, 100], 5)
+            cv.line(roi, p[11], p[4], [0, 255, 0, 100], 5)
+            cv.line(roi, p[10], p[5], [0, 255, 0, 100], 5)
+            cv.line(roi, p[1], p[8], [0, 255, 0, 100], 5)
+            cv.line(roi, p[2], p[7], [0, 255, 0, 100], 5)
 
-            for (let i = 0; i < 100; i++) {
-                roi.ucharPtr(i,i)[0]=255
-            }
+
+            // console.log(color)
+
+
+            // cv.cvtColor(roi, dst, cv.COLOR_RGB2HLS);
+            let color = getColorList(roi, b[4], 3)
+            let colorDistance1 = colorDistance(color);
+            app.message=colorDistance1
+            // document.getElementById("debug").style.backgroundColor=`rgb(${color[0][0]},${color[0][1]},${color[0][2]})`
+            // debug(color)
+
 
             cv.imshow("roi", roi)
 

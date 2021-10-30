@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>魔方</title>
     <script src="utils.js"></script>
+    <script src="color.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
     <style>
@@ -16,7 +17,7 @@
             border: 0;
             left: 0;
             padding: 0;
-            opacity: 0.5;
+            /*opacity: 0.5;*/
         }
     </style>
 </head>
@@ -32,12 +33,12 @@
     </select>
     <!--  移动端浏览器允许自动播放，除非静音muted -->
     <video id="video" autoplay muted playsinline style="display: none"></video>
-    <canvas id="roi" width="100%"></canvas>
+    <canvas id="roi"></canvas>
+
+    <button onclick="console.log(app.message)">123</button>
 
 
-
-
-    <textarea id="debug" :value="message" style="z-index: -10;display: none"></textarea>
+    <input id="debug" :value="message" >
 </div>
 
 <script src="main.js"></script>
